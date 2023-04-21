@@ -14,10 +14,11 @@ BEGIN;
         PRIMARY KEY (id)
     );
 
-    CREATE TABLE IF NOT EXISTS evento_pessoa (
+    CREATE TABLE IF NOT EXISTS inscricao (
         id BIGINT NOT NULL UNIQUE,
         fk_evento BIGINT NOT NULL,
         fk_pessoa BIGINT NOT NULL,
+        presenca BOOLEAN DEFAULT FALSE NOT NULL,
         PRIMARY KEY (id),
         FOREIGN KEY (fk_evento) REFERENCES evento(id),
         FOREIGN KEY (fk_pessoa) REFERENCES pessoa(id)
