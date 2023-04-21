@@ -34,7 +34,7 @@ class PessoaService extends GenericService
             exit(
                 json_encode([
                     "success" => false,
-                    "message" => "Usuario not found"
+                    "message" => "Pessoa not found"
                 ])
             );
         }
@@ -61,7 +61,7 @@ class PessoaService extends GenericService
             exit(
                 json_encode([
                     "success" => false,
-                    "message" => "Usuario not found"
+                    "message" => "Pessoa not found"
                 ])
             );
         }
@@ -93,5 +93,12 @@ class PessoaService extends GenericService
         $pdo->bindParameter(":cpf", $pessoa->getCpf(), PDO::PARAM_STR);
 
         $pdo->insert();
+
+        exit(
+            json_encode([
+                "success" => false,
+                "message" => "Pessoa successfully inserted"
+            ])
+        );
     }
 }
