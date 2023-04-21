@@ -111,7 +111,7 @@ class UsuarioService extends GenericService
                 )
         SQL);
 
-        $pdo->bindParameter(":id", $pdo->nextId('usuarios', 'id'), PDO::PARAM_INT);
+        $pdo->bindParameter(":id", $pdo->nextId('usuario', 'id'), PDO::PARAM_INT);
         $pdo->bindParameter(":usuario", $usuario->getUsuario(), PDO::PARAM_STR);
         $pdo->bindParameter(":senha", $usuario->getHash(), PDO::PARAM_STR);
 
