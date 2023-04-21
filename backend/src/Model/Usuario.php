@@ -14,7 +14,6 @@ class Usuario
     public ?int    $id;
     private string $usuario;
     private string $senha;
-    private string $hash;
 
     public function __construct() {}
 
@@ -46,22 +45,16 @@ class Usuario
     public function setSenha(string $senha) : self
     {
         $this->senha = $senha;
-        $this->hash = $this->generateHash($this->senha);
         return $this;
     }
     public function getSenha()
     {
         return $this->senha;
-        return $this;
     }
 
-    private function generateHash($senha)
+    public function getHash($senha)
     {
         return hash('sha256', $senha);
-    }
-    public function getHash()
-    {
-        return $this->hash;
     }
 
     public function getVars()
