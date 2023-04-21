@@ -90,7 +90,7 @@ class EventoService extends GenericService
 
         $pdo->bindParameter(":id", $pdo->nextId('evento', 'id'), PDO::PARAM_INT);
         $pdo->bindParameter(":nome", $evento->getNome(), PDO::PARAM_STR);
-        $pdo->bindParameter(":datahora", $evento->getDataHora()->getTimestamp(), PDO::PARAM_STR);
+        $pdo->bindParameter(":datahora", $evento->getDataHora(), PDO::PARAM_STR);
 
         $pdo->insert();
 
