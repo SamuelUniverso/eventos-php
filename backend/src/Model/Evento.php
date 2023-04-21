@@ -13,9 +13,9 @@ use Universum\Service\EventoService;
  */
 class Evento implements EntityInterface
 {
-    public ?int     $id;
-    public string   $nome;
-    public DateTime $datahora;
+    public ?int   $id;
+    public string $nome;
+    public string $datahora;
 
     public function __construct() {}
 
@@ -44,12 +44,12 @@ class Evento implements EntityInterface
         return $this->nome;
     }
 
-    public function setDataHora(DateTime $datahora) : self
+    public function setDataHora(string $datahora) : self
     {
         $this->datahora = $datahora;
         return $this;
     }
-    public function getDataHora() : DateTime
+    public function getDataHora() : string
     {
         return $this->datahora;
     }
