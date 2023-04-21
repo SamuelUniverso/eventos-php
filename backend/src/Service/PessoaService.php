@@ -61,7 +61,7 @@ class PessoaService extends GenericService
             exit(
                 json_encode([
                     "success" => false,
-                    "message" => "Pessoa not found"
+                    "message" => "no Pessoa found"
                 ])
             );
         }
