@@ -3,16 +3,16 @@
 namespace Universum\Service;
 
 use PDO;
-use Universum\Model\Usuario;
+use Universum\Model\Pessoa;
 
 /**
  * @author Samuel Oberger Rockenbach <samuel.rockenbach@universo.univates.br>
- * @since february-2023
+ * @since april-2023
  * @version 1.0
  */
-class UsuarioService extends GenericService
+class PessoaService extends GenericService
 {
-    private const CLASSPATH = 'Universum\Model\Usuario';
+    private const CLASSPATH = 'Universum\Model\Pessoa';
 
     public function __construct()
     {
@@ -24,33 +24,10 @@ class UsuarioService extends GenericService
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
             SELECT *
-              FROM usuario
+              FROM pessoa
              WHERE id = :id
         SQL);
         $pdo->bindParameter(':id', $id, PDO::PARAM_STR);
-
-        $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "Usuario not found"
-                ])
-            );
-        }
-
-        return $result;
-    }
-
-    public function fetchByUsuario(string $usuario) : ?Usuario
-    {
-        $pdo = $this->getConnection();
-        $pdo->createPreparedStatement(<<<SQL
-            SELECT *
-              FROM usuario
-             WHERE usuario LIKE :usuario
-        SQL);
-        $pdo->bindParameter(':usuario', $usuario, PDO::PARAM_STR);
 
         $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
         if(!$result) {
@@ -76,7 +53,7 @@ class UsuarioService extends GenericService
         $pdo = $this->getConnection();
         $pdo->createStandardStatement(<<<SQL
             SELECT *
-            FROM usuario
+            FROM pessoa
         SQL);
 
         $result = $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
@@ -93,27 +70,27 @@ class UsuarioService extends GenericService
     }
 
     /**
-     * Insere um Usuario na base
+     * Insere uma Pessoa na base
      * 
      * @method insert
      * @return void
      */
-    public function insert(Usuario $usuario)
+    public function insert(Pessoa $pessoa)
     {
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
             INSERT INTO
-                usuario (id,usuario,senha)
+                pessoa (id,nome,cpf)
                 VALUES (
                     :id
-                    :usuario,
-                    :senha
+                    :nome,
+                    :cpf
                 )
         SQL);
 
-        $pdo->bindParameter(":id", $pdo->nextId('usuarios', 'id'), PDO::PARAM_INT);
-        $pdo->bindParameter(":usuario", $usuario->getUsuario(), PDO::PARAM_STR);
-        $pdo->bindParameter(":senha", $usuario->getHash(), PDO::PARAM_STR);
+        $pdo->bindParameter(":id", $pdo->nextId('usuario', 'id'), PDO::PARAM_INT);
+        $pdo->bindParameter(":nome", $pessoa->getNome(), PDO::PARAM_STR);
+        $pdo->bindParameter(":cpf", $pessoa->getCpf(), PDO::PARAM_STR);
 
         $pdo->insert();
     }
