@@ -1,0 +1,8 @@
+{
+    "driver": "pgsql",
+    "dbname": "eventos",
+    "hostname": "localhost",
+    "user": "postgres",
+    "password": "postgres",
+    "port": 5432
+}

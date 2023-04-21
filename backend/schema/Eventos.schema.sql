@@ -3,7 +3,7 @@ BEGIN;
     CREATE TABLE IF NOT EXISTS evento (
         id BIGINT NOT NULL UNIQUE,
         nome TEXT NOT NULL,
-        datahora DATE,
+        datahora TIMESTAMP,
         PRIMARY KEY (id)
     );
 

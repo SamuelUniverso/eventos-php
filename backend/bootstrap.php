@@ -6,6 +6,11 @@ use Universum\Utils\StringUtils;
 
 require "vendor/autoload.php";
 
+/// ENVIRONMENT SETUP
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 /// ROUTE CONTROL
 
 $method = $_SERVER['REQUEST_METHOD'];
