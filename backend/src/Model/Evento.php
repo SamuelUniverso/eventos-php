@@ -2,7 +2,6 @@
 
 namespace Universum\Model;
 
-use DateTime;
 use Universum\Model\Interfaces\EntityInterface;
 use Universum\Service\EventoService;
 
