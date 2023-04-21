@@ -84,7 +84,7 @@ class UsuarioService extends GenericService
             exit(
                 json_encode([
                     "success" => false,
-                    "message" => "Usuario not found"
+                    "message" => "no Usuario found"
                 ])
             );
         }
@@ -116,5 +116,12 @@ class UsuarioService extends GenericService
         $pdo->bindParameter(":senha", $usuario->getHash(), PDO::PARAM_STR);
 
         $pdo->insert();
+
+        exit(
+            json_encode([
+                "success" => false,
+                "message" => "Usuario successfully inserted"
+            ])
+        );
     }
 }
