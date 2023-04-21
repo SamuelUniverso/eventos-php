@@ -52,7 +52,7 @@ class Usuario
         return $this->senha;
     }
 
-    public function getHash($senha)
+    public function generateHash($senha)
     {
         return hash('sha256', $senha);
     }
