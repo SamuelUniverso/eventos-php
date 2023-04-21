@@ -4,7 +4,6 @@ namespace Universum\Service;
 
 use PDO;
 use Universum\Model\Evento;
-use Universum\Model\Pessoa;
 
 /**
  * @author Samuel Oberger Rockenbach <samuel.rockenbach@universo.univates.br>
