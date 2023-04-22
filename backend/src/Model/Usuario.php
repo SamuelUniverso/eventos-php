@@ -17,7 +17,7 @@ class Usuario
 
     public function __construct() {}
 
-    public static function withId(string $id)
+    public static function withId(int $id)
     {
         return (new UsuarioService())->fetchById($id);
     }

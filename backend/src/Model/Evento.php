@@ -18,7 +18,7 @@ class Evento implements EntityInterface
 
     public function __construct() {}
 
-    public static function withId(string $id)
+    public static function withId(int $id)
     {
         return (new EventoService())->fetchById($id);
     }

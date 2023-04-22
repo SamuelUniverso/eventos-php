@@ -12,13 +12,13 @@ use Universum\Service\PessoaService;
  */
 class Pessoa implements EntityInterface
 {
-    public ?int    $id;
-    public  string $nome;
-    public  string $cpf;
+    public ?int   $id;
+    public string $nome;
+    public string $cpf;
 
     public function __construct() {}
 
-    public static function withId(string $id)
+    public static function withId(int $id)
     {
         return (new PessoaService())->fetchById($id);
     }
