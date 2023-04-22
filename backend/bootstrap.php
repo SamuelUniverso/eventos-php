@@ -1,5 +1,6 @@
 <?php
 
+use Dotenv\Dotenv;
 use Universum\Router\Router;
 use Universum\Router\Routes;
 use Universum\Utils\StringUtils;
