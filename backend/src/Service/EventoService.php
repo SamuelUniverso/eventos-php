@@ -82,7 +82,7 @@ class EventoService extends GenericService
             INSERT INTO
                 pessoa (id,nome,datahora)
                 VALUES (
-                    :id
+                    :id,
                     :nome,
                     :datahora
                 )

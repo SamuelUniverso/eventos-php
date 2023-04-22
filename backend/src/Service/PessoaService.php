@@ -82,7 +82,7 @@ class PessoaService extends GenericService
             INSERT INTO
                 pessoa (id,nome,cpf)
                 VALUES (
-                    :id
+                    :id,
                     :nome,
                     :cpf
                 )

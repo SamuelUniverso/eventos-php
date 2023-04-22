@@ -105,7 +105,7 @@ class UsuarioService extends GenericService
             INSERT INTO
                 usuario (id,usuario,senha)
                 VALUES (
-                    :id
+                    :id,
                     :usuario,
                     :senha
                 )

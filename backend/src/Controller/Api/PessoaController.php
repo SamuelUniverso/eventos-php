@@ -24,7 +24,6 @@ class PessoaController
                     "reponse" => "Pessoa {$route}"
                 ])
             );
-            
         }
 
         if($route == "all") {

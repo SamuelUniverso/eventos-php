@@ -84,7 +84,7 @@ class InscricaoService extends GenericService
             INSERT INTO
                 inscricao (id,fk_evento,fk_pessoa,presenca)
                 VALUES (
-                    :id
+                    :id,
                     :fk_evento,
                     :fk_pessoa,
                     :presenca
