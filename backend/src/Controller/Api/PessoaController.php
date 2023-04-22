@@ -2,6 +2,9 @@
 
 namespace Universum\Controller\Api;
 
+use Universum\Model\Pessoa;
+use Universum\Service\PessoaService;
+
 /**
  * @author Samuel Oberger Rockenbach <samuel.rockenbach@universo.univates.br>
  * @since march-2023
@@ -19,22 +22,29 @@ class PessoaController
     {
         if(is_numeric($route)) {
             exit(
-                json_encode([
-                    "success" => true,
-                    "reponse" => "Pessoa {$route}"
-                ])
+                json_encode(
+                    (new PessoaService())->fetchById($route)
+                )
             );
         }
 
         if($route == "all") {
             exit(
-                json_encode([
-                    "success"  => true,
-                    "reponse" => "[Pessoas]"
-                ])
+                json_encode(
+                    (new PessoaService())->fetcAll()
+                )
             );
         }
 
+        if($route == "cpf") {
+            empty($param) ? throw new InvalidArgumentException() : null;
+            
+            exit(
+                json_encode(
+                    (new PessoaService())->fetchByCpf($param)
+                )
+            );
+        }
     }
 
     /**
@@ -42,21 +52,44 @@ class PessoaController
      * 
      * @since 1.0
      *  {
-     *      "nome: "Nome",
-     *      "email": "email@test.net",
-     *      "telefone": "51987654321",
-     *      "aniversario: "yyyy-mm-dd"
+     *      "nome": "Nome",
+     *      "cpf": "123456789AB
      *  }
      */
     public function post($route, $param)
     {
         $object = json_decode($param);
-        $object->id = 1;
+
+        if( empty($object->nome)
+         || empty($object->cpf)
+         )
+         {
+             exit(
+                 json_encode([
+                     "success" => false,
+                     "message" => "Required fields not provided for Pessoa"
+                 ])
+             );
+         }
+
+        $pessoa = (new Pessoa())
+            ->setNome($object->nome)
+            ->setCpf($object->cpf);
+        
+        if(!(new PessoaService())->insert($pessoa))
+        {
+            exit(
+                json_encode([
+                    "success" => false,
+                    "message" => "Failed to insert new Pessoa"
+                ])
+            );
+        }
+
         exit(
             json_encode([
                 "success"  => true,
-                "message"  => "Pessoa successfully created",
-                "response" => json_encode($object)
+                "message"  => "Pessoa successfully created"
             ])
         );
     }
@@ -66,20 +99,33 @@ class PessoaController
      * 
      * @since 1.0
      *  {
-     *      "id": 221,
+     *      "id": 1,
      *      "nome: "Nome",
-     *      "email": "email@test.net",
-     *      "telefone": "51987654321",
-     *      "aniversario: "yyyy-mm-dd"
+     *      "cpf": "123456789AB
      *  }
      */
     public function put($route, $param)
     {
+        $object = json_decode($param);
+
+        $update = (new PessoaService())->fetchById($object->id);
+        $update->setNome($object->nome)
+               ->setCpf($object->cpf);
+
+        if(!(new PessoaService())->update($update))
+        {
+            exit(
+                json_encode([
+                    "success" => false,
+                    "message" => "Failed to update Pessoa"
+                ])
+            );
+        }
+
         exit(
             json_encode([
                 "success"  => true,
-                "message"  => "Pessoa sucessfully updated!",
-                "response" => $param
+                "message"  => "Pessoa sucessfully updated"
             ])
         );
     }
@@ -92,13 +138,25 @@ class PessoaController
     public function delete($route, $param)
     {
         if(is_numeric($route)) {
-            exit(
-                json_encode([
-                    "success" => true,
-                    "message" => "Pessoa with id '{$route}' sucessfully deleted"
-                ])
-            );
+            if(!(new PessoaService())->fetchById($route))
+            {
+                exit(
+                    json_encode([
+                        "success" => false,
+                        "message" => "Pessoa with id '{$route}' doesn't exists"
+                    ])
+                );
+            }
+            else {
+                (new PessoaService())->delete($route);
+
+                exit(
+                    json_encode([
+                        "success" => true,
+                        "message" => "Pessoa with id '{$route}' sucessfully deleted"
+                    ])
+                );
+            }
         }
     }
-    
 }

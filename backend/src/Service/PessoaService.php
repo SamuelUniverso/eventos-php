@@ -3,6 +3,7 @@
 namespace Universum\Service;
 
 use PDO;
+use stdClass;
 use Universum\Model\Pessoa;
 
 /**
@@ -19,6 +20,13 @@ class PessoaService extends GenericService
         parent::__construct();
     }
 
+    /**
+     * Busca Pessoa pelo ID
+     * 
+     * @method fetchById
+     * @param string $id
+     * @return Pessoa
+     */
     public function fetchById(string $id)
     {
         $pdo = $this->getConnection();
@@ -43,10 +51,28 @@ class PessoaService extends GenericService
     }
 
     /**
-     * Lista todos os Usuarios
+     * Buscar Pessoa pelo CPF
+     * 
+     * @method fetchByCpf
+     * @param string $cpf
+     * @return Pessoa
+     */
+    public function fetchByCpf(string $cpf)
+    {
+        $pdo = $this->getConnection();
+        $pdo->createPreparedStatement(
+            PessoaServiceHelper::getSQLForFetchByCpf()
+        );
+        $pdo->bindParameter(':cpf', $cpf, PDO::PARAM_STR);
+
+        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
+    }
+
+    /**
+     * Listar todas as Pessoas
      * 
      * @method fetcAll
-     * @return array
+     * @return array[Pessoa]
      */
     public function fetcAll()
     {
@@ -70,7 +96,7 @@ class PessoaService extends GenericService
     }
 
     /**
-     * Insere uma Pessoa na base
+     * Inserir uma Pessoa
      * 
      * @method insert
      * @return void
@@ -92,13 +118,35 @@ class PessoaService extends GenericService
         $pdo->bindParameter(":nome", $pessoa->getNome(), PDO::PARAM_STR);
         $pdo->bindParameter(":cpf", $pessoa->getCpf(), PDO::PARAM_STR);
 
-        $pdo->insert();
+        return $pdo->insert();
+    }
 
-        exit(
-            json_encode([
-                "success" => false,
-                "message" => "Pessoa successfully inserted"
-            ])
-        );
+    /**
+     * Atualizar uma Pessoa
+     * 
+     * @method update
+     * @param Pessoa $pessoa
+     * @return void
+     */
+    public function update(Pessoa $pessoa)
+    {
+        $pdo = $this->getConnection();
+        return $pdo->updateObject($pessoa, 'pessoa', 'id');
+    }
+
+    /**
+     * Deletar uma Pessoa
+     * 
+     * @method deelte
+     * @param string $id
+     * @return void
+     */
+    public function delete(string $id)
+    {
+        $sample = new stdClass();
+        $sample->id = $id;
+
+        $pdo = $this->getConnection();
+        $pdo->deleteObject($sample, 'pessoa', 'id');
     }
 }
