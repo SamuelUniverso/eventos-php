@@ -12,16 +12,15 @@ use Universum\Service\InscricaoService;
  */
 class Inscricao implements EntityInterface
 {
-    public ?int $id;
     public ?int $fk_evento;
     public ?int $fk_pessoa;
     public bool $presenca;
 
     public function __construct() {}
 
-    public static function withId(int $id)
+    public static function withId(int $fk_evento, $fk_pessoa)
     {
-        return (new InscricaoService())->fetchById($id);
+        return (new InscricaoService())->fetchById($fk_evento, $fk_pessoa);
     }
 
     public function setEvento(Evento $evento) : self

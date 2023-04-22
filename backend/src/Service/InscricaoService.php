@@ -19,22 +19,24 @@ class InscricaoService extends GenericService
         parent::__construct();
     }
 
-    public function fetchById(string $id)
+    public function fetchById(string $fk_evento, string $fk_pessoa)
     {
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
             SELECT *
               FROM inscricao
-             WHERE id = :id
+             WHERE fk_evento = :fk_evento
+              AND  fk_pessoa = :fk_pessoa
         SQL);
-        $pdo->bindParameter(':id', $id, PDO::PARAM_STR);
+        $pdo->bindParameter(':fk_evento', $fk_evento, PDO::PARAM_STR);
+        $pdo->bindParameter(':fk_pessoa', $fk_pessoa, PDO::PARAM_STR);
 
         $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
         if(!$result) {
             exit(
                 json_encode([
                     "success" => false,
-                    "message" => "Inscricao {$id} not found"
+                    "message" => "Inscricao (evento: {$fk_evento}, pessoa: {$fk_pessoa}) not found"
                 ])
             );
         }
