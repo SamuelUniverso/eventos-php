@@ -60,9 +60,11 @@ class PessoaService extends GenericService
     public function fetchByCpf(string $cpf)
     {
         $pdo = $this->getConnection();
-        $pdo->createPreparedStatement(
-            PessoaServiceHelper::getSQLForFetchByCpf()
-        );
+        $pdo->createPreparedStatement(<<<SQL
+            SELECT *
+              FROM pessoa
+             WHERE cpf LIKE :cpf
+        SQL);
         $pdo->bindParameter(':cpf', $cpf, PDO::PARAM_STR);
 
         return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
