@@ -10,7 +10,7 @@ use Universum\Service\EventoService;
  * @since april-2023
  * @version 1.0
  */
-class Evento implements EntityInterface
+class Evento
 {
     public ?int   $id;
     public string $nome;
@@ -51,10 +51,5 @@ class Evento implements EntityInterface
     public function getDataHora() : string
     {
         return $this->datahora;
-    }
-
-    public function getVars()
-    {
-        return get_object_vars($this);
     }
 }
