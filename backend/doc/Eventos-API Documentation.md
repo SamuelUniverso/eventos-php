@@ -1,4 +1,18 @@
-# Eventos-API Documentation
+﻿# Eventos-API Documentation
+
+## Login
+**POST: /authenticate.php**
+
+    {
+	    "username": "<username>",
+	    "password: "****"
+    }
+Response:
+
+    {
+        "session": true,
+        "username": "admin"
+    }
 
 ## Pessoas
 **GET: /api/pessoa/{$id}**
@@ -168,3 +182,5 @@
     }
 
 **DELETE: /api/inscricao/{$id}**
+
+

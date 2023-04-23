@@ -10,6 +10,19 @@
 
 <body class="stackedit">
   <div class="stackedit__html"><h1 id="eventos-api-documentation">Eventos-API Documentation</h1>
+<h2 id="login">Login</h2>
+<p><strong>POST: /authenticate.php</strong></p>
+<pre><code>{
+    "username": "&lt;username&gt;",
+    "password: "****"
+}
+</code></pre>
+<p>Response:</p>
+<pre><code>{
+    "session": true,
+    "username": "admin"
+}
+</code></pre>
 <h2 id="pessoas">Pessoas</h2>
 <p><strong>GET: /api/pessoa/{$id}</strong></p>
 <pre><code>{
