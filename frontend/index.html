@@ -1,0 +1,39 @@
+<?php ?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script src="./script/login.js"></script>
+
+    </head>
+    <body>
+        <form id="login"> 
+            <input type="text" name="usuario" id="usuario"></input>
+            <input type="password" name="senha" id="senha"></input>
+            <button type="submit">Login</button>
+        </form>
+
+        <!-- SCRIPT -->
+        <script>
+            let form = document.querySelector('#login');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                try
+                {
+                    const formData = new FormData(event.target);
+                    const usuario = formData.get('usuario');
+                    const senha = formData.get('senha');
+
+                    authenticate(usuario, senha);
+                }
+                catch(error) {
+                    console.log(error);
+                }
+            });
+        </script>
+
+    </body>
+</html>
