@@ -3,6 +3,7 @@
 namespace Universum\Service;
 
 use PDO;
+use stdClass;
 use Universum\Model\Usuario;
 
 /**
@@ -19,7 +20,7 @@ class UsuarioService extends GenericService
         parent::__construct();
     }
 
-    public function fetchById(string $id)
+    public function fetchById(string $id) : ?Usuario
     {
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
@@ -69,9 +70,9 @@ class UsuarioService extends GenericService
      * Lista todos os Usuarios
      * 
      * @method fetcAll
-     * @return array
+     * @return array[Usuario]
      */
-    public function fetcAll()
+    public function fetcAll() : array
     {
         $pdo = $this->getConnection();
         $pdo->createStandardStatement(<<<SQL
@@ -96,9 +97,9 @@ class UsuarioService extends GenericService
      * Insere um Usuario na base
      * 
      * @method insert
-     * @return void
+     * @return bool
      */
-    public function insert(Usuario $usuario)
+    public function insert(Usuario $usuario) : bool
     {
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
@@ -113,15 +114,38 @@ class UsuarioService extends GenericService
 
         $pdo->bindParameter(":id", $pdo->nextId('usuario', 'id'), PDO::PARAM_INT);
         $pdo->bindParameter(":usuario", $usuario->getUsuario(), PDO::PARAM_STR);
-        $pdo->bindParameter(":senha", $usuario->getHash(), PDO::PARAM_STR);
+        $pdo->bindParameter(":senha", $usuario->generateHash(), PDO::PARAM_STR);
 
-        $pdo->insert();
+        return $pdo->insert();
+    }
 
-        exit(
-            json_encode([
-                "success" => false,
-                "message" => "Usuario successfully inserted"
-            ])
-        );
+    /**
+     * Atualizar um Usuario
+     * 
+     * @method update
+     * @param Usuario $usuario
+     * @return bool
+     */
+    public function update(Usuario $usuario) : bool
+    {
+        $pdo = $this->getConnection();
+        $usuario->setSenha($usuario->generateHash());
+        return $pdo->updateObject($usuario, 'usuario', 'id');
+    }
+
+    /**
+     * Deletar um Usuario
+     * 
+     * @method delete
+     * @param string $id
+     * @return bool
+     */
+    public function delete(string $id) : bool
+    {
+        $sample = new stdClass();
+        $sample->id = $id;
+
+        $pdo = $this->getConnection();
+        return $pdo->deleteObject($sample, 'usuario', 'id');
     }
 }

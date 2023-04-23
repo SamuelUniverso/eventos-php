@@ -11,9 +11,9 @@ use Universum\Service\UsuarioService;
  */
 class Usuario
 {
-    public ?int    $id;
-    private string $usuario;
-    private string $senha;
+    public ?int   $id;
+    public string $usuario;
+    public string $senha;
 
     public function __construct() {}
 
@@ -52,13 +52,8 @@ class Usuario
         return $this->senha;
     }
 
-    public function generateHash($senha)
+    public function generateHash()
     {
-        return hash('sha256', $senha);
-    }
-
-    public function getVars()
-    {
-        return get_object_vars($this);
+        return hash('sha256', $this->senha);
     }
 }
