@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos-API Documentation</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="eventos-api-documentation">Eventos-API Documentation</h1>
+<h2 id="pessoas">Pessoas</h2>
+<p><strong>GET: /api/pessoa/{$id}</strong></p>
+<pre><code>{
+    "id": 1,
+    "nome: "Fulano",
+    "cpf": "123456789AB"
+}
+</code></pre>
+<p><strong>GET: /api/pessoa/cpf/{$cpf}</strong></p>
+<pre><code>{
+    "id": 1,
+    "nome: "Fulano",
+    "cpf": "123456789AB"
+}
+</code></pre>
+<p><strong>GET: /api/pessoa/all/</strong></p>
+<pre><code>[{
+    "id": 1,
+    "nome: "Fulano",
+    "cpf": "123456789AB"
+},
+{
+    "id": 2,
+    "nome: "Beltrano",
+    "cpf": "987654321AB"
+}]
+</code></pre>
+<p><strong>POST: /api/pessoa/</strong></p>
+<pre><code>{
+    "nome: "Fulano",
+    "cpf": "123456789AB"
+}
+</code></pre>
+<p><strong>PUT: /api/pessoa/</strong></p>
+<pre><code>{
+    "id": 1,
+    "nome: "Fulano",
+    "cpf": "123456789AB"
+}
+</code></pre>
+<p><strong>DELETE: /api/pessoa/{$id}</strong></p>
+<h2 id="usuarios">Usuarios</h2>
+<p><strong>GET: /api/usuario/{$id}</strong></p>
+<pre><code>{
+    "id": 1,
+    "usuario: "admin",
+    "senha": "&lt;sha256-hash&gt;"
+}
+</code></pre>
+<p><strong>GET: /api/usuario/all/</strong></p>
+<pre><code>[{
+    "id": 1,
+    "usuario: "admin",
+    "senha": "&lt;sha256-hash&gt;"
+},
+{
+    "id": 2,
+    "usuario: "operator",
+    "senha": "&lt;sha256-hash&gt;"
+}]
+</code></pre>
+<p><strong>POST: /api/usuario/</strong></p>
+<pre><code>{
+    "usuario: "admin",
+    "senha": "****"
+}
+</code></pre>
+<p><strong>PUT: /api/usuario/</strong></p>
+<pre><code>{
+    "id": 1,
+    "usuario: "admin",
+    "senha": "****"
+}
+</code></pre>
+<p><strong>DELETE: /api/usuario/{$id}</strong></p>
+<h2 id="eventos">Eventos</h2>
+<p><strong>GET: /api/evento/{$id}</strong></p>
+<pre><code>{
+    "id": 1,
+    "nome": "Evento",
+    "datahora": "yyyy-mm-dd hh24:mi:ss"
+}
+</code></pre>
+<p><strong>GET: /api/evento/all/</strong></p>
+<pre><code>[{
+    "id": 1,
+    "nome": "Evento 1",
+    "datahora": "yyyy-mm-dd hh24:mi:ss"
+},
+{
+    "id": 2,
+    "nome": "Evento 2",
+    "datahora": "yyyy-mm-dd hh24:mi:ss"
+}]
+</code></pre>
+<p><strong>POST: /api/evento/</strong></p>
+<pre><code>{
+    "evento: "Evento",
+    "datahora": "yyyy-mm-dd hh24:mi:ss"
+}
+</code></pre>
+<p><strong>PUT: /api/evento/</strong></p>
+<pre><code>{
+    "id": 1,
+    "nome": "Evento",
+    "datahora": "yyyy-mm-dd hh24:mi:ss"
+}
+</code></pre>
+<p><strong>DELETE: /api/evento/{$id}</strong></p>
+<h2 id="inscrições">Inscrições</h2>
+<p><strong>GET: /api/inscricao/{$id}</strong></p>
+<pre><code>{
+    "id": 1,
+    "fk_evento": 1,
+	"fk_pessoa": 1,
+    "presenca": false
+}
+</code></pre>
+<p><strong>GET: /api/inscricao/all/</strong></p>
+<pre><code>[{
+    "id": 1,
+    "fk_evento": 1,
+	"fk_pessoa": 1,
+    "presenca": false
+},
+{
+    "id": 2,
+    "fk_evento": 1,
+	"fk_pessoa": 2,
+    "presenca": true
+}]
+</code></pre>
+<p><strong>POST: /api/inscricao/</strong></p>
+<pre><code>{
+    "fk_evento": 1,
+	"fk_pessoa": 1,
+    "presenca": false
+}
+</code></pre>
+<p><strong>PUT: /api/inscricao/</strong></p>
+<pre><code>{
+    "id": 1,
+    "fk_evento": 1,
+	"fk_pessoa": 1,
+    "presenca": false
+}
+</code></pre>
+<p><strong>DELETE: /api/inscricao/{$id}</strong></p>
+</div>
+</body>
+
+</html>
