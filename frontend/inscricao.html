@@ -12,7 +12,7 @@
        
         <h1>Inscrições</h1>
 
-        <div style="width: 50%;">
+        <div style="width: 71%;">
             <table class="table">
                 <thead styel="text-align:left;">
                     <th>ID</th>
@@ -68,11 +68,17 @@
                                                 <input type="text" value="${pessoa.cpf ?? ''}" readonly="true"/>
                                             </td>
                                             <td>
-                                                <input type="text" value="${inscricao.presenca = 'false' ? 'Não' : 'Sim'}" readonly="true"/>
+                                                <input type="text" value="${inscricao.presenca == false ? 'Não' : 'Sim'}" readonly="true"/>
+                                            </td>
+                                            <td>
+                                                <button onclick="chekin(`+inscricao.id+`,`+evento+`,`+pessoa.id+`)">Chek-In</button>
+                                            </td>
+                                            <td>
+                                                <button onclick="checkout(`+inscricao.id+`,`+evento+`,`+pessoa.id+`)">Chek-Out</button>
                                             </td>
                                         </tr>
                                     `;
-                                
+
                                     placeholder.innerHTML += out;
                                 }
                             );
@@ -82,6 +88,52 @@
                 )
                 .catch(error => console.log(error))
                 ;
+
+            /**
+             * Realiza check-in da Pessoa
+             */
+            function chekin(inscricao, evento, pessoa) {
+                fetch(`http://localhost:8081/api/inscricao/`, {
+                    method: 'PUT',
+                    body: `{
+                        "id": ${inscricao},
+                        "fk_evento": ${evento},
+                        "fk_pessoa": ${pessoa},
+                        "presenca": true
+                    }`
+                })
+                .then(
+                    response => response.json()
+                )
+                .then(
+                    response => {
+                        location.reload();
+                    }
+                );
+            }
+        
+            /**
+             * Realiza check-out da Pessoa
+             */
+            function checkout(inscricao, evento, pessoa) {
+                fetch(`http://localhost:8081/api/inscricao/`, {
+                    method: 'PUT',
+                    body: `{
+                        "id": ${inscricao},
+                        "fk_evento": ${evento},
+                        "fk_pessoa": ${pessoa},
+                        "presenca": false
+                    }`
+                })
+                .then(
+                    response => response.json()
+                )
+                .then(
+                    response => {
+                        location.reload();
+                    }
+                );
+            }
 
         </script>
 
