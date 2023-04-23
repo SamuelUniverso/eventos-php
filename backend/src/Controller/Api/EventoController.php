@@ -111,7 +111,7 @@ class EventoController
         http_response_code(201);
         exit(
             json_encode([
-                "success" => false,
+                "success" => true,
                 "message" => "Evento successfully created"
             ])
         );
