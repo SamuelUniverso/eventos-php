@@ -21,6 +21,7 @@ class PessoaController
     public function get($route, $param)
     {
         if(is_numeric($route)) {
+            http_response_code(200);
             exit(
                 json_encode(
                     (new PessoaService())->fetchById($route)
@@ -29,6 +30,7 @@ class PessoaController
         }
 
         if($route == "all") {
+            http_response_code(200);
             exit(
                 json_encode(
                     (new PessoaService())->fetcAll()
@@ -38,13 +40,22 @@ class PessoaController
 
         if($route == "cpf") {
             empty($param) ? throw new InvalidArgumentException() : null;
-            
+
+            http_response_code(200);
             exit(
                 json_encode(
                     (new PessoaService())->fetchByCpf($param)
                 )
             );
         }
+
+        http_response_code(401);
+        exit(
+            json_encode([
+                "success" => false,
+                "message" => "Bad request"
+            ])
+        );
     }
 
     /**
@@ -64,6 +75,7 @@ class PessoaController
          || empty($object->cpf)
          )
          {
+            http_response_code(400);
              exit(
                  json_encode([
                      "success" => false,
@@ -78,6 +90,7 @@ class PessoaController
         
         if(!(new PessoaService())->insert($pessoa))
         {
+            http_response_code(400);
             exit(
                 json_encode([
                     "success" => false,
@@ -86,6 +99,7 @@ class PessoaController
             );
         }
 
+        http_response_code(201);
         exit(
             json_encode([
                 "success"  => true,
@@ -114,6 +128,7 @@ class PessoaController
 
         if(!(new PessoaService())->update($update))
         {
+            http_response_code(400);
             exit(
                 json_encode([
                     "success" => false,
@@ -122,6 +137,7 @@ class PessoaController
             );
         }
 
+        http_response_code(201);
         exit(
             json_encode([
                 "success"  => true,
@@ -140,6 +156,7 @@ class PessoaController
         if(is_numeric($route)) {
             if(!(new PessoaService())->fetchById($route))
             {
+                http_response_code(400);
                 exit(
                     json_encode([
                         "success" => false,
@@ -150,6 +167,7 @@ class PessoaController
             else {
                 (new PessoaService())->delete($route);
 
+                http_response_code(201);
                 exit(
                     json_encode([
                         "success" => true,

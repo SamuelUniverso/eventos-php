@@ -10,7 +10,7 @@ use Universum\Service\PessoaService;
  * @since february-2023
  * @version 1.0
  */
-class Pessoa implements EntityInterface
+class Pessoa
 {
     public ?int   $id;
     public string $nome;
@@ -51,10 +51,5 @@ class Pessoa implements EntityInterface
     public function getCpf() : string
     {
         return $this->cpf;
-    }
-
-    public function getVars()
-    {
-        return get_object_vars($this);
     }
 }

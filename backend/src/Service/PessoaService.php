@@ -101,9 +101,9 @@ class PessoaService extends GenericService
      * Inserir uma Pessoa
      * 
      * @method insert
-     * @return void
+     * @return bool
      */
-    public function insert(Pessoa $pessoa)
+    public function insert(Pessoa $pessoa) : bool
     {
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
@@ -128,9 +128,9 @@ class PessoaService extends GenericService
      * 
      * @method update
      * @param Pessoa $pessoa
-     * @return void
+     * @return bool
      */
-    public function update(Pessoa $pessoa)
+    public function update(Pessoa $pessoa) : bool
     {
         $pdo = $this->getConnection();
         return $pdo->updateObject($pessoa, 'pessoa', 'id');
@@ -139,16 +139,16 @@ class PessoaService extends GenericService
     /**
      * Deletar uma Pessoa
      * 
-     * @method deelte
+     * @method delete
      * @param string $id
-     * @return void
+     * @return bool
      */
-    public function delete(string $id)
+    public function delete(string $id) : bool
     {
         $sample = new stdClass();
         $sample->id = $id;
 
         $pdo = $this->getConnection();
-        $pdo->deleteObject($sample, 'pessoa', 'id');
+        return $pdo->deleteObject($sample, 'pessoa', 'id');
     }
 }
