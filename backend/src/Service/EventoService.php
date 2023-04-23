@@ -3,6 +3,7 @@
 namespace Universum\Service;
 
 use PDO;
+use stdClass;
 use Universum\Model\Evento;
 
 /**
@@ -18,7 +19,14 @@ class EventoService extends GenericService
     {
         parent::__construct();
     }
-
+    
+    /**
+     * Busca Evento pelo ID
+     * 
+     * @method fetchById
+     * @param string $id
+     * @return Evento
+     */
     public function fetchById(string $id)
     {
         $pdo = $this->getConnection();
@@ -29,24 +37,14 @@ class EventoService extends GenericService
         SQL);
         $pdo->bindParameter(':id', $id, PDO::PARAM_STR);
 
-        $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "Evento {$id} not found"
-                ])
-            );
-        }
-
-        return $result;
+        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
      * Lista todos os Usuarios
      * 
      * @method fetcAll
-     * @return array
+     * @return array[Evento]
      */
     public function fetcAll()
     {
@@ -56,17 +54,7 @@ class EventoService extends GenericService
             FROM evento
         SQL);
 
-        $result = $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "no Evento found"
-                ])
-            );
-        }
-
-        return $result;
+        return $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
@@ -80,7 +68,7 @@ class EventoService extends GenericService
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
             INSERT INTO
-                pessoa (id,nome,datahora)
+                evento (id,nome,datahora)
                 VALUES (
                     :id,
                     :nome,
@@ -92,13 +80,36 @@ class EventoService extends GenericService
         $pdo->bindParameter(":nome", $evento->getNome(), PDO::PARAM_STR);
         $pdo->bindParameter(":datahora", $evento->getDataHora(), PDO::PARAM_STR);
 
-        $pdo->insert();
-
-        exit(
-            json_encode([
-                "success" => false,
-                "message" => "Evento successfully inserted"
-            ])
-        );
+        return $pdo->insert();
     }
+
+    /**
+     * Atualizar um Evento
+     * 
+     * @method update
+     * @param Evento $evento
+     * @return bool
+     */
+    public function update(Evento $evento) : bool
+    {
+        $pdo = $this->getConnection();
+        return $pdo->updateObject($evento, 'evento', 'id');
+    }
+
+    /**
+     * Deletar um Usuario
+     * 
+     * @method delete
+     * @param string $id
+     * @return bool
+     */
+    public function delete(string $id) : bool
+    {
+        $sample = new stdClass();
+        $sample->id = $id;
+
+        $pdo = $this->getConnection();
+        return $pdo->deleteObject($sample, 'evento', 'id');
+    }
+
 }
