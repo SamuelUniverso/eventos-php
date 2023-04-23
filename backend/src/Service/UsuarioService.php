@@ -20,6 +20,13 @@ class UsuarioService extends GenericService
         parent::__construct();
     }
 
+    /**
+     * Busca Usuario pelo ID
+     * 
+     * @method fetchById
+     * @param string $id
+     * @return Usuario
+     */
     public function fetchById(string $id)
     {
         $pdo = $this->getConnection();
