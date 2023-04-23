@@ -21,20 +21,40 @@ class UsuarioController
     public function get($route, $param)
     {
         if(is_numeric($route)) {
+            $usuario = (new UsuarioService())->fetchById($route);
+            
+            if(!$usuario) {
+                http_response_code(400);
+                exit(
+                    json_encode([
+                        "success" => false,
+                        "message" => "Usuario not found"
+                    ])
+                );
+            }
+
             http_response_code(200);
             exit(
-                json_encode(
-                    (new UsuarioService())->fetchById($route)
-                )
+                json_encode($usuario)
             );
         }
 
         if($route == "all") {
+            $usuarios = (new UsuarioService())->fetcAll();
+
+            if(!$usuarios) {
+                http_response_code(400);
+                exit(
+                    json_encode([
+                        "success" => false,
+                        "message" => "no Usuario found"
+                    ])
+                );
+            }   
+
             http_response_code(200);
             exit(
-                json_encode(
-                    (new UsuarioService())->fetcAll()
-                )
+                json_encode($usuarios)
             );
         }
 

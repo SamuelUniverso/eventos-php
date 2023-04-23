@@ -30,17 +30,7 @@ class UsuarioService extends GenericService
         SQL);
         $pdo->bindParameter(':id', $id, PDO::PARAM_STR);
 
-        $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "Usuario not found"
-                ])
-            );
-        }
-
-        return $result;
+        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     public function fetchByUsuario(string $usuario) : ?Usuario
@@ -80,17 +70,7 @@ class UsuarioService extends GenericService
             FROM usuario
         SQL);
 
-        $result = $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "no Usuario found"
-                ])
-            );
-        }
-
-        return $result;
+        return $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
