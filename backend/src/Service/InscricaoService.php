@@ -43,6 +43,14 @@ class InscricaoService extends GenericService
         return $result;
     }
 
+    /**
+     * Busca Inscricao pela chave composta
+     * 
+     * @method fetchByInscricao
+     * @param string $fk_evento
+     * @param string $fk_pessoa
+     * @return array[Inscricao]
+     */
     public function fetchByInscricao(string $fk_evento, string $fk_pessoa)
     {
         $pdo = $this->getConnection();
@@ -55,17 +63,47 @@ class InscricaoService extends GenericService
         $pdo->bindParameter(':fk_evento', $fk_evento, PDO::PARAM_STR);
         $pdo->bindParameter(':fk_pessoa', $fk_pessoa, PDO::PARAM_STR);
 
-        $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "Inscricao (evento: {$fk_evento}, pessoa: {$fk_pessoa}) not found"
-                ])
-            );
-        }
+        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
+    }
 
-        return $result;
+    /**
+     * Busca Inscricoes pelo Evento
+     * 
+     * @method fetchByEvento
+     * @param string $fk_evento
+     * @return array[Inscricao]
+     */
+    public function fetchByEvento(string $fk_evento)
+    {
+        $pdo = $this->getConnection();
+        $pdo->createPreparedStatement(<<<SQL
+            SELECT *
+              FROM inscricao
+             WHERE fk_evento = :fk_evento
+        SQL);
+        $pdo->bindParameter(':fk_evento', $fk_evento, PDO::PARAM_STR);
+
+        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
+    }
+
+    /**
+     * Busca Inscricoes pela Pessoa
+     * 
+     * @method fetchByPessoa
+     * @param string $fk_pessoa
+     * @return array[Inscricao]
+     */
+    public function fetchByPessoa(string $fk_pessoa)
+    {
+        $pdo = $this->getConnection();
+        $pdo->createPreparedStatement(<<<SQL
+            SELECT *
+              FROM inscricao
+             WHERE fk_pessoa = :fk_pessoa
+        SQL);
+        $pdo->bindParameter(':fk_pessoa', $fk_pessoa, PDO::PARAM_STR);
+
+        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**

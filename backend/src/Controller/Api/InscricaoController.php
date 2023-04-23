@@ -60,6 +60,48 @@ class InscricaoController
             );
         }
 
+        if($route == "evento") {
+            empty($param) ? throw new InvalidArgumentException() : null;
+            
+            $inscricoes = (new InscricaoService())->fetchByEvento($param);
+
+            if(!$inscricoes) {
+                http_response_code(400);
+                exit(
+                    json_encode([
+                        "success" => false,
+                        "message" => "no Inscricao found"
+                    ])
+                );
+            }
+
+            http_response_code(200);
+            exit(
+                json_encode($inscricoes)
+            );
+        }
+
+        if($route == "pessoa") {
+            empty($param) ? throw new InvalidArgumentException() : null;
+            
+            $inscricoes = (new InscricaoService())->fetchByPessoa($param);
+
+            if(!$inscricoes) {
+                http_response_code(400);
+                exit(
+                    json_encode([
+                        "success" => false,
+                        "message" => "no Inscricao found"
+                    ])
+                );
+            }
+
+            http_response_code(200);
+            exit(
+                json_encode($inscricoes)
+            );
+        }
+
         http_response_code(400);
         exit(
             json_encode([
