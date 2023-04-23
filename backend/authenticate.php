@@ -28,11 +28,12 @@ header("Content-Type: application/json");
 if($_SERVER['REQUEST_METHOD'] != 'POST')
 {
     http_response_code(401);
-    echo json_encode([
-        "success" => false,
-        "message" => "invalid HTTP method"
-    ]);
-    return null;
+    exit(
+        json_encode([
+            "success" => false,
+            "message" => "invalid HTTP method"
+        ])
+    );
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -40,24 +41,34 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     $input = file_get_contents('php://input');
 
     if(!isset($input)) {
-        echo json_encode([
-            "success" => false,
-            "message" => "JSON authentication body not provided"
-        ]);
-        return null; 
+        exit(
+            json_encode([
+                "success" => false,
+                "message" => "JSON authentication body not provided"
+            ])
+        );
     }
 
     $auth = json_decode($input);
     if(!isset($auth->username)) {
-        echo json_encode([
-            "success" => false,
-            "message" => "not a valid username"
-        ]);
-        return null;  
+        exit(
+            json_encode([
+                "success" => false,
+                "message" => "not a valid username"
+            ])
+        );
     }
 
     $usuarioService = new UsuarioService();
     $user = $usuarioService->fetchByUsuario($auth->username);
+    if(!$user) {
+        exit(
+            json_encode([
+                "success" => false,
+                "message" => "nonexistent username"
+            ])
+        );
+    }
 
     $hash = hash('sha256', $auth->password);
     if($hash == $user->getSenha())
