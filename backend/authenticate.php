@@ -75,6 +75,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         http_response_code('200');
     }
     else {
+        echo <<<JSON
+        {
+            "session": false,
+            "username": ""
+        }
+        JSON;
         http_response_code('401');
     }
 }
