@@ -40,6 +40,13 @@ class UsuarioService extends GenericService
         return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
+    /**
+     * Busca Usuario pelo userid
+     * 
+     * @method fetchByUsuario
+     * @param string $usuario
+     * @return Usuario
+     */
     public function fetchByUsuario(string $usuario) : ?Usuario
     {
         $pdo = $this->getConnection();
@@ -50,17 +57,7 @@ class UsuarioService extends GenericService
         SQL);
         $pdo->bindParameter(':usuario', $usuario, PDO::PARAM_STR);
 
-        $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "Usuario not found"
-                ])
-            );
-        }
-
-        return $result;
+        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
