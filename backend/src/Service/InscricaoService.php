@@ -83,7 +83,7 @@ class InscricaoService extends GenericService
         SQL);
         $pdo->bindParameter(':fk_evento', $fk_evento, PDO::PARAM_STR);
 
-        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
+        return $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
@@ -103,7 +103,7 @@ class InscricaoService extends GenericService
         SQL);
         $pdo->bindParameter(':fk_pessoa', $fk_pessoa, PDO::PARAM_STR);
 
-        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
+        return $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
