@@ -2,7 +2,6 @@
 
 namespace Universum\Model;
 
-use Universum\Model\Interfaces\EntityInterface;
 use Universum\Service\InscricaoService;
 
 /**
@@ -10,7 +9,7 @@ use Universum\Service\InscricaoService;
  * @since april-2023
  * @version 1.0
  */
-class Inscricao implements EntityInterface
+class Inscricao
 {
     public ?int $fk_evento;
     public ?int $fk_pessoa;
@@ -51,10 +50,5 @@ class Inscricao implements EntityInterface
     public function getPresenca() : bool
     {
         return $this->presenca;
-    }
-
-    public function getVars()
-    {
-        return get_object_vars($this);
     }
 }
