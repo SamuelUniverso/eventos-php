@@ -52,7 +52,7 @@
                                         <input type="text" value="${evento.datahora ?? ''}" readonly="true"/>
                                     </td>
                                     <td>
-                                        <button onclick="inscritos(`+evento.id+`)"">Inscrições</button>
+                                        <button onclick="inscricoes(`+evento.id+`)"">Inscrições</button>
                                     </td>
                                 </tr>
                             `;
@@ -63,9 +63,9 @@
                 .catch(error => console.log(error))
                 ;
 
-            function inscritos(eventoId)
+            function inscricoes(eventoId)
             {
-                console.log(eventoId);
+                location.href=`inscricao.html?evento=${eventoId}`
             }
 
         </script>

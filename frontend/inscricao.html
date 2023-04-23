@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script src="./script/login.js"></script>
+        <script>
+            validateSession();
+        </script>
+
+    </head>
+    <body>
+       
+        <h1>Inscrições</h1>
+
+        <div style="width: 50%;">
+            <table class="table">
+                <thead styel="text-align:left;">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Presença</th>
+                </thead>
+                <tbody id="table-inscricao">
+
+                </tbody>
+            </table>
+        </div>
+
+            <script>
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                const evento = urlParams.get('evento')
+
+                fetch(`http://localhost:8081/api/inscricao/evento/${evento}`, {
+                    method: 'GET'
+                })
+                .then(
+                    response => response.json()
+                )
+                .then(
+                    inscricoes => {
+
+                        let out = "";
+                        for(let inscricao of inscricoes) {
+
+                            /**
+                             * Buscar Pessoa
+                             */
+                            fetch(`http://localhost:8081/api/pessoa/${inscricao.fk_pessoa}`, {
+                                method: 'GET'
+                            })
+                            .then(
+                                response => response.json()
+                            )
+                            .then(
+                                pessoa => {
+                                    let placeholder = document.querySelector('#table-inscricao');
+
+                                    out += `
+                                        <tr>
+                                            <td>
+                                                ${inscricao.id}
+                                            </td>
+                                            <td>
+                                                <input type="text" value="${pessoa.nome ?? ''}" readonly="true"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" value="${pessoa.cpf ?? ''}" readonly="true"/>
+                                            </td>
+                                            <td>
+                                                <input type="text" value="${inscricao.presenca = 'false' ? 'Não' : 'Sim'}" readonly="true"/>
+                                            </td>
+                                        </tr>
+                                    `;
+                                
+                                    placeholder.innerHTML += out;
+                                }
+                            );
+                        }
+                        
+                    }
+                )
+                .catch(error => console.log(error))
+                ;
+
+        </script>
+
+    </body>
+</html>
