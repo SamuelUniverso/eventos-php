@@ -54,7 +54,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
         exit(
             json_encode([
                 "success" => false,
-                "message" => "not a valid username"
+                "message" => "invalid username"
             ])
         );
     }
