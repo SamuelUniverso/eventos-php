@@ -22,24 +22,24 @@ class Inscricao
         return (new InscricaoService())->fetchById($fk_evento, $fk_pessoa);
     }
 
-    public function setEvento(Evento $evento) : self
+    public function setEvento(int $evento) : self
     {
-        $this->fk_evento = $evento->getId();
+        $this->fk_evento = $evento;
         return $this;
     }
-    public function getEvento() : Evento
+    public function getEvento() : int
     {
-        return Evento::withId($this->fk_evento);
+        return $this->fk_evento;
     }
 
-    public function setPessoa(Pessoa $pessoa) : self
+    public function setPessoa(int $pessoa) : self
     {
-        $this->fk_pessoa = $pessoa->getId();
+        $this->fk_pessoa = $pessoa;
         return $this;
     }
-    public function getPessoa() : Pessoa
+    public function getPessoa()
     {
-        return Pessoa::withId($this->fk_pessoa);
+        return $this->fk_pessoa;
     }
 
     public function setPresenca(bool $presenca) : self

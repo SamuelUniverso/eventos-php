@@ -3,6 +3,7 @@
 namespace Universum\Service;
 
 use PDO;
+use stdClass;
 use Universum\Model\Inscricao;
 
 /**
@@ -19,7 +20,30 @@ class InscricaoService extends GenericService
         parent::__construct();
     }
 
-    public function fetchById(string $fk_evento, string $fk_pessoa)
+    public function fetchById(string $id)
+    {
+        $pdo = $this->getConnection();
+        $pdo->createPreparedStatement(<<<SQL
+            SELECT *
+              FROM inscricao
+             WHERE id = :id
+        SQL);
+        $pdo->bindParameter(':id', $id, PDO::PARAM_STR);
+
+        $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
+        if(!$result) {
+            exit(
+                json_encode([
+                    "success" => false,
+                    "message" => "Inscricao (evento: {$fk_evento}, pessoa: {$fk_pessoa}) not found"
+                ])
+            );
+        }
+
+        return $result;
+    }
+
+    public function fetchByInscricao(string $fk_evento, string $fk_pessoa)
     {
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
@@ -58,17 +82,7 @@ class InscricaoService extends GenericService
             FROM inscricao
         SQL);
 
-        $result = $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "no Inscricao found"
-                ])
-            );
-        }
-
-        return $result;
+        return $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
@@ -91,18 +105,40 @@ class InscricaoService extends GenericService
                 )
         SQL);
 
-        $pdo->bindParameter(":id", $pdo->nextId('evento', 'id'), PDO::PARAM_INT);
-        $pdo->bindParameter(":fk_evento", $inscricao->getEvento()->getId(), PDO::PARAM_INT);
-        $pdo->bindParameter(":fk_pessoa", $inscricao->getPessoa()->getId(), PDO::PARAM_INT);
+        $pdo->bindParameter(":id", $pdo->nextId('inscricao', 'id'), PDO::PARAM_INT);
+        $pdo->bindParameter(":fk_evento", $inscricao->getEvento(), PDO::PARAM_INT);
+        $pdo->bindParameter(":fk_pessoa", $inscricao->getPessoa(), PDO::PARAM_INT);
         $pdo->bindParameter(":presenca", $inscricao->getPresenca(), PDO::PARAM_BOOL);
 
-        $pdo->insert();
+        return $pdo->insert();
+    }
 
-        exit(
-            json_encode([
-                "success" => false,
-                "message" => "Inscricao successfully inserted"
-            ])
-        );
+    /**
+     * Atualizar uma Inscricao
+     * 
+     * @method update
+     * @param Inscricao $inscricao
+     * @return bool
+     */
+    public function update(Inscricao $inscricao) : bool
+    {
+        $pdo = $this->getConnection();
+        return $pdo->updateObject($inscricao, 'inscricao', 'id');
+    }
+
+    /**
+     * Deletar uma Inscricao
+     * 
+     * @method delete
+     * @param string $id
+     * @return bool
+     */
+    public function delete(string $id) : bool
+    {
+        $sample = new stdClass();
+        $sample->id = $id;
+
+        $pdo = $this->getConnection();
+        return $pdo->deleteObject($sample, 'inscricao', 'id');
     }
 }
