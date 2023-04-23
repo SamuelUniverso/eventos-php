@@ -46,3 +46,42 @@
     }
 
 **DELETE: /api/pessoa/{$id}**
+
+## Usuarios
+**GET: /api/usuario/{$id}**
+
+    {
+	    "id": 1,
+	    "usuario: "admin",
+	    "senha": "<sha256-hash>"
+    }
+
+**GET: /api/usuario/all/**
+
+    [{
+	    "id": 1,
+	    "usuario: "admin",
+	    "senha": "<sha256-hash>"
+    },
+    {
+	    "id": 2,
+	    "usuario: "operator",
+	    "senha": "<sha256-hash>"
+    }]
+   
+**POST: /api/usuario/**
+
+    {
+	    "usuario: "admin",
+	    "senha": "****"
+    }
+
+**PUT: /api/usuario/**
+
+    {
+	    "id": 1,
+	    "usuario: "admin",
+	    "senha": "****"
+    }
+
+**DELETE: /api/usuario/{$id}**
