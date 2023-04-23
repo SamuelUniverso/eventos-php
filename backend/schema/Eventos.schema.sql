@@ -15,13 +15,15 @@ BEGIN;
     );
 
     CREATE TABLE IF NOT EXISTS inscricao (
+        id BIGINT NOT NULL UNIQUE,
         fk_evento BIGINT NOT NULL,
         fk_pessoa BIGINT NOT NULL,
         presenca BOOLEAN DEFAULT FALSE NOT NULL,
-        PRIMARY KEY (fk_evento, fk_pessoa),
+        PRIMARY KEY (id),
         FOREIGN KEY (fk_evento) REFERENCES evento(id),
         FOREIGN KEY (fk_pessoa) REFERENCES pessoa(id)
     );
+    ALTER TABLE inscricao ADD CONSTRAINT uq_fk_evento_fk_pessoa UNIQUE(fk_evento, fk_pessoa);
 
     CREATE TABLE IF NOT EXISTS usuario (
         id BIGINT NOT NULL UNIQUE,
