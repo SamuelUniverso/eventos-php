@@ -97,7 +97,7 @@ class EventoService extends GenericService
     }
 
     /**
-     * Deletar um Usuario
+     * Deletar um Evento
      * 
      * @method delete
      * @param string $id
@@ -111,5 +111,4 @@ class EventoService extends GenericService
         $pdo = $this->getConnection();
         return $pdo->deleteObject($sample, 'evento', 'id');
     }
-
 }
