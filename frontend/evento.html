@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script src="./script/login.js"></script>
+        <script>
+            validateSession();
+        </script>
+
+    </head>
+    <body>
+       
+        <h1>Eventos</h1>
+
+        <div style="width: 50%;">
+            <table class="table">
+                <thead styel="text-align:left;">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Data-Hora</th>
+                </thead>
+                <tbody id="table-evento">
+
+                </tbody>
+            </table>
+        </div>
+
+            <script>
+
+                fetch(`http://localhost:8081/api/evento/all`, {
+                    method: 'GET'
+                })
+                .then(
+                    response => response.json()
+                )
+                .then(
+                    eventos => {
+                        let placeholder = document.querySelector('#table-evento');
+
+                        let out = "";
+                        for(let evento of eventos) {
+
+                            out += `
+                                <tr>
+                                    <td>
+                                        ${evento.id}
+                                    </td>
+                                    <td>
+                                        <input type="text" value="${evento.nome ?? ''}" readonly="true"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" value="${evento.datahora ?? ''}" readonly="true"/>
+                                    </td>
+                                    <td>
+                                        <button onclick="inscritos(`+evento.id+`)"">Inscrições</button>
+                                    </td>
+                                </tr>
+                            `;
+                        }
+                        placeholder.innerHTML = out;
+                    }
+                )
+                .catch(error => console.log(error))
+                ;
+
+            function inscritos(eventoId)
+            {
+                console.log(eventoId);
+            }
+
+        </script>
+
+    </body>
+</html>
