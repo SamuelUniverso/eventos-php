@@ -47,7 +47,7 @@ class UsuarioService extends GenericService
      * @param string $usuario
      * @return Usuario
      */
-    public function fetchByUsuario(string $usuario) : ?Usuario
+    public function fetchByUsuario(string $usuario)
     {
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
