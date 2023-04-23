@@ -169,7 +169,7 @@ class UsuarioController
                 exit(
                     json_encode([
                         "success" => false,
-                        "message" => "Usuario with id '{$route}' doesn't exists"
+                        "message" => "Usuario doesn't exists"
                     ])
                 );
             }
@@ -180,7 +180,7 @@ class UsuarioController
                 exit(
                     json_encode([
                         "success" => true,
-                        "message" => "Usuario with id '{$route}' sucessfully deleted"
+                        "message" => "Usuario sucessfully deleted"
                     ])
                 );
             }
