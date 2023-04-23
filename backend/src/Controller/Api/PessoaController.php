@@ -179,7 +179,7 @@ class PessoaController
                 exit(
                     json_encode([
                         "success" => false,
-                        "message" => "Pessoa with id '{$route}' doesn't exists"
+                        "message" => "Pessoa doesn't exists"
                     ])
                 );
             }
@@ -190,7 +190,7 @@ class PessoaController
                 exit(
                     json_encode([
                         "success" => true,
-                        "message" => "Pessoa with id '{$route}' sucessfully deleted"
+                        "message" => "Pessoa sucessfully deleted"
                     ])
                 );
             }
