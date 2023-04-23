@@ -20,7 +20,7 @@ class UsuarioService extends GenericService
         parent::__construct();
     }
 
-    public function fetchById(string $id) : ?Usuario
+    public function fetchById(string $id)
     {
         $pdo = $this->getConnection();
         $pdo->createPreparedStatement(<<<SQL
