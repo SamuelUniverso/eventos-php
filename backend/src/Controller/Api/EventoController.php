@@ -2,9 +2,7 @@
 
 namespace Universum\Controller\Api;
 
-use Monolog\Handler\ElasticsearchHandler;
 use Universum\Model\Evento;
-use Universum\Model\Usuario;
 use Universum\Service\EventoService;
 
 /**
