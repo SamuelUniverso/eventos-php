@@ -21,20 +21,39 @@ class PessoaController
     public function get($route, $param)
     {
         if(is_numeric($route)) {
+            $pessoa = (new PessoaService())->fetchById($route);
+
+            if(!$pessoa) {
+                exit(
+                    json_encode([
+                        "success" => false,
+                        "message" => "Pessoa not found"
+                    ])
+                );
+            }
+
             http_response_code(200);
             exit(
-                json_encode(
-                    (new PessoaService())->fetchById($route)
-                )
+                json_encode($pessoa)
             );
         }
 
         if($route == "all") {
+            $pessoas = (new PessoaService())->fetcAll();
+
+            if(!$pessoas) {
+                http_response_code(400);
+                exit(
+                    json_encode([
+                        "success" => false,
+                        "message" => "no Pessoa found"
+                    ])
+                );
+            }
+
             http_response_code(200);
             exit(
-                json_encode(
-                    (new PessoaService())->fetcAll()
-                )
+                json_encode($pessoas)
             );
         }
 

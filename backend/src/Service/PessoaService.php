@@ -37,17 +37,7 @@ class PessoaService extends GenericService
         SQL);
         $pdo->bindParameter(':id', $id, PDO::PARAM_STR);
 
-        $result = $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "Pessoa not found"
-                ])
-            );
-        }
-
-        return $result;
+        return $pdo->fetch(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
@@ -84,17 +74,7 @@ class PessoaService extends GenericService
             FROM pessoa
         SQL);
 
-        $result = $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
-        if(!$result) {
-            exit(
-                json_encode([
-                    "success" => false,
-                    "message" => "no Pessoa found"
-                ])
-            );
-        }
-
-        return $result;
+        return $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
     }
 
     /**
