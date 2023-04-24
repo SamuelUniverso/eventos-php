@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script src="./script/login.js"></script>
+        <script>
+            validateSession();
+        </script>
+
+    </head>
+    <body>
+        <button onclick="location.href='home.html'">Voltar</button>
+       
+        <h1>Cadastro Pessoa</h1>
+
+        <form id="register"> 
+            <label for="nome">Nome:</label>
+                <input type="text" name="nome" id="nome"></input>
+            <label for="nome">CPF:</label>
+                <input type="text" name="cpf" id="cpf"></input>
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <!-- SCRIPT -->
+        <script>
+            let form = document.querySelector('#register');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                try
+                {
+                    const formData = new FormData(event.target);
+                    const nome = formData.get('nome');
+                    const cpf = formData.get('cpf');
+
+                    // console.log(nome,cpf);
+
+                    fetch(`http://localhost:8081/api/pessoa/`, {
+                        method: 'POST',
+                        body: `{
+                            "nome": "`+nome+`",
+                            "cpf": "`+cpf+`"
+                        }`
+                    })
+                    .then(
+                        res => res.json()
+                    )
+                    .then(
+                        response => alert(response.message)
+                    );
+                }
+                catch(error) {
+                    console.log(error);
+                }
+            });
+        </script>
+
+    </body>
+</html>
