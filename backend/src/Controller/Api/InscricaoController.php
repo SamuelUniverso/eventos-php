@@ -126,7 +126,7 @@ class InscricaoController
 
         if( empty($object->fk_evento)
          || empty($object->fk_pessoa)
-         || !is_bool($object->presenca)
+         || !is_bool( (bool) $object->presenca)
         )
         {
         http_response_code(400);

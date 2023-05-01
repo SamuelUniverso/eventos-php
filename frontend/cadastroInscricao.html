@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <script src="./script/login.js"></script>
+        <script>
+            validateSession();
+        </script>
+
+    </head>
+    <body>
+        <button onclick="location.href='home.html'">Voltar</button>
+       
+        <h1>Cadastro Inscrição</h1>
+
+        <form id="register"> 
+            <label for="nome">Ref. Evento:</label>
+                <input type="text" name="evento" id="evento"></input>
+            <label for="nome">Ref. Pessoa:</label>
+                <input type="text" name="pessoa" id="pessoa"></input>
+            <button type="submit">Cadastrar</button>
+        </form>
+
+        <!-- SCRIPT -->
+        <script>
+            let form = document.querySelector('#register');
+
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                try
+                {
+                    const formData = new FormData(event.target);
+                    const evento = formData.get('evento');
+                    const pessoa = formData.get('pessoa');
+
+                    fetch(`http://localhost:8081/api/inscricao/`, {
+                        method: 'POST',
+                        body: `{
+                            "fk_evento": "`+evento+`",
+                            "fk_pessoa": "`+pessoa+`",
+                            "presenca": "`+false+`"
+                        }`
+                    })
+                    .then(
+                        res => res.json()
+                    )
+                    .then(
+                        // response => console.log(response)
+                        response => alert(response.message)
+                    );
+                }
+                catch(error) {
+                    console.log(error);
+                }
+            });
+        </script>
+
+    </body>
+</html>
