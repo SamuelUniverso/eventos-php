@@ -126,7 +126,7 @@ class InscricaoController
 
         if( empty($object->fk_evento)
          || empty($object->fk_pessoa)
-         || !is_bool( (bool) $object->presenca)
+         || !is_bool((bool) $object->presenca)
         )
         {
         http_response_code(400);
@@ -141,7 +141,7 @@ class InscricaoController
         $inscricao = (new Inscricao())
             ->setEvento($object->fk_evento)
             ->setPessoa($object->fk_pessoa)
-            ->setPresenca($object->presenca);
+            ->setPresenca($object->presenca == 'true' ? true : false);
 
         if(!(new InscricaoService())->insert($inscricao))
         {
