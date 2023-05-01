@@ -63,7 +63,7 @@ class InscricaoController
         if($route == "evento") {
             empty($param) ? throw new InvalidArgumentException() : null;
             
-            $inscricoes = (new InscricaoService())->fetchByEvento($param);
+            $inscricoes = (new InscricaoService())->fetchInscricaoPessoaByEvento($param);
 
             if(!$inscricoes) {
                 http_response_code(400);

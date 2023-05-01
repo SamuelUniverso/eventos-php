@@ -87,6 +87,35 @@ class InscricaoService extends GenericService
     }
 
     /**
+     * Busca Inscricoes pelo Evento
+     * 
+     * @method fetchByEvento
+     * @param string $fk_evento
+     * @return array[Inscricao]
+     */
+    public function fetchInscricaoPessoaByEvento(string $fk_evento)
+    {
+        $pdo = $this->getConnection();
+        $pdo->createPreparedStatement(<<<SQL
+            SELECT
+                i.id AS id,
+                p.nome AS nome,
+                p.cpf AS cpf,
+                i.fk_evento AS fk_evento,
+                i.fk_pessoa AS fk_pessoa,
+                i.presenca AS presenca
+            FROM inscricao i
+                INNER JOIN pessoa p ON (
+                    p.id = i.fk_pessoa 
+                )
+             WHERE i.fk_evento = :fk_evento
+        SQL);
+        $pdo->bindParameter(':fk_evento', $fk_evento, PDO::PARAM_STR);
+
+        return $pdo->fetchAll(PDO::FETCH_CLASS, self::CLASSPATH);
+    }
+
+    /**
      * Busca Inscricoes pela Pessoa
      * 
      * @method fetchByPessoa

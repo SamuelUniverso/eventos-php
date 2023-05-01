@@ -40,51 +40,35 @@
                 )
                 .then(
                     inscricoes => {
+                        let placeholder = document.querySelector('#table-inscricao');
 
                         let out = "";
                         for(let inscricao of inscricoes) {
-
-                            /**
-                             * Buscar Pessoa
-                             */
-                            fetch(`http://localhost:8081/api/pessoa/${inscricao.fk_pessoa}`, {
-                                method: 'GET'
-                            })
-                            .then(
-                                response => response.json()
-                            )
-                            .then(
-                                pessoa => {
-                                    let placeholder = document.querySelector('#table-inscricao');
-
-                                    out += `
-                                        <tr>
-                                            <td>
-                                                ${inscricao.id}
-                                            </td>
-                                            <td>
-                                                <input type="text" value="${pessoa.nome ?? ''}" readonly="true"/>
-                                            </td>
-                                            <td>
-                                                <input type="text" value="${pessoa.cpf ?? ''}" readonly="true"/>
-                                            </td>
-                                            <td>
-                                                <input type="text" value="${inscricao.presenca == false ? 'Não' : 'Sim'}" readonly="true"/>
-                                            </td>
-                                            <td>
-                                                <button onclick="chekin(`+inscricao.id+`,`+evento+`,`+pessoa.id+`)">Chek-In</button>
-                                            </td>
-                                            <td>
-                                                <button onclick="checkout(`+inscricao.id+`,`+evento+`,`+pessoa.id+`)">Chek-Out</button>
-                                            </td>
-                                        </tr>
-                                    `;
-
-                                    placeholder.innerHTML += out;
-                                }
-                            );
+                            out += `
+                                <tr>
+                                    <td>
+                                        ${inscricao.id}
+                                    </td>
+                                    <td>
+                                        <input type="text" value="${inscricao.nome ?? ''}" readonly="true"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" value="${inscricao.cpf ?? ''}" readonly="true"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" value="${inscricao.presenca == false ? 'Não' : 'Sim'}" readonly="true"/>
+                                    </td>
+                                    <td>
+                                        <button onclick="chekin(`+inscricao.id+`,`+inscricao.fk_evento+`,`+inscricao.fk_pessoa+`)">Chek-In</button>
+                                    </td>
+                                    <td>
+                                        <button onclick="checkout(`+inscricao.id+`,`+inscricao.fk_evento+`,`+inscricao.fk_pessoa+`)">Chek-Out</button>
+                                    </td>
+                                </tr>
+                            `;
                         }
-                        
+
+                        placeholder.innerHTML += out;
                     }
                 )
                 .catch(error => console.log(error))
