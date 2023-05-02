@@ -96,7 +96,7 @@ class PessoaService extends GenericService
                 )
         SQL);
 
-        $pdo->bindParameter(":id", $pdo->nextId('usuario', 'id'), PDO::PARAM_INT);
+        $pdo->bindParameter(":id", $pdo->nextId('pessoa', 'id'), PDO::PARAM_INT);
         $pdo->bindParameter(":nome", $pessoa->getNome(), PDO::PARAM_STR);
         $pdo->bindParameter(":cpf", $pessoa->getCpf(), PDO::PARAM_STR);
 
