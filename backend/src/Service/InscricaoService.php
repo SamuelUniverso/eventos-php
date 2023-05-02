@@ -4,6 +4,7 @@ namespace Universum\Service;
 
 use PDO;
 use stdClass;
+use Throwable;
 use Universum\Model\Inscricao;
 
 /**
@@ -177,7 +178,13 @@ class InscricaoService extends GenericService
         $pdo->bindParameter(":fk_pessoa", $inscricao->getPessoa(), PDO::PARAM_INT);
         $pdo->bindParameter(":presenca", $inscricao->getPresenca(), PDO::PARAM_BOOL);
 
-        return $pdo->insert();
+        try {
+            return $pdo->insert();
+        }
+        catch(Throwable $e)
+        {
+            return false;
+        }
     }
 
     /**

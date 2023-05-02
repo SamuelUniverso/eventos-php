@@ -43,10 +43,11 @@
                         }`
                     })
                     .then(
-                        res => res.json()
+                        res => res.text()
                     )
                     .then(
-                        response => alert(response.message)
+                        response => console.log(response)
+                        // response => alert(response.message)
                     );
                 }
                 catch(error) {
