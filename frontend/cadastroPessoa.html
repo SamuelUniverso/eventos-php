@@ -21,10 +21,57 @@
             <button type="submit">Cadastrar</button>
         </form>
 
+        </br>
+        </br>
+
+        <div style="width: 50%;">
+            <table class="table">
+                <thead styel="text-align:left;">
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Data-Hora</th>
+                </thead>
+                <tbody id="table-pessoa">
+
+                </tbody>
+            </table>
+        </div>
+
         <!-- SCRIPT -->
         <script>
-            let form = document.querySelector('#register');
+            fetch(`http://localhost:8081/api/pessoa/all`, {
+                    method: 'GET'
+                })
+                .then(
+                    response => response.json()
+                )
+                .then(
+                    pessoas => {
+                        let placeholder = document.querySelector('#table-pessoa');
 
+                        let out = "";
+                        for(let pessoa of pessoas) {
+
+                            out += `
+                                <tr>
+                                    <td>
+                                        ${pessoa.id}
+                                    </td>
+                                    <td>
+                                        <input type="text" value="${pessoa.nome ?? ''}" readonly="true"/>
+                                    </td>
+                                    <td>
+                                        <input type="text" value="${pessoa.cpf ?? ''}" readonly="true"/>
+                                    </td>
+                                </tr>
+                            `;
+                        }
+                        placeholder.innerHTML = out;
+                    }
+                )
+                .catch(error => console.log(error));
+
+            let form = document.querySelector('#register');
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
 
@@ -33,8 +80,6 @@
                     const formData = new FormData(event.target);
                     const nome = formData.get('nome');
                     const cpf = formData.get('cpf');
-
-                    // console.log(nome,cpf);
 
                     fetch(`http://localhost:8081/api/pessoa/`, {
                         method: 'POST',
@@ -54,6 +99,7 @@
                     console.log(error);
                 }
             });
+
         </script>
 
     </body>
