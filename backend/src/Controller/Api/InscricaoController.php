@@ -2,9 +2,7 @@
 
 namespace Universum\Controller\Api;
 
-use Universum\Model\Evento;
 use Universum\Model\Inscricao;
-use Universum\Service\EventoService;
 use Universum\Service\InscricaoService;
 
 /**
@@ -129,7 +127,7 @@ class InscricaoController
          || !is_bool((bool) $object->presenca)
         )
         {
-        http_response_code(400);
+            http_response_code(400);
             exit(
                 json_encode([
                     "success" => false,
