@@ -14,6 +14,7 @@ use Universum\Model\Pessoa;
 class PessoaService extends GenericService
 {
     private const CLASSPATH = 'Universum\Model\Pessoa';
+    private const ENTITY = 'pessoa';
 
     public function __construct()
     {
@@ -86,6 +87,7 @@ class PessoaService extends GenericService
     public function insert(Pessoa $pessoa) : bool
     {
         $pdo = $this->getConnection();
+        $pdo->beginTransaction();
         $pdo->createPreparedStatement(<<<SQL
             INSERT INTO
                 pessoa (id,nome,cpf)
@@ -100,7 +102,12 @@ class PessoaService extends GenericService
         $pdo->bindParameter(":nome", $pessoa->getNome(), PDO::PARAM_STR);
         $pdo->bindParameter(":cpf", $pessoa->getCpf(), PDO::PARAM_STR);
 
-        return $pdo->insert();
+        if($pdo->insert())
+        {
+            $pdo->commitTransaction(); return true;
+        }
+
+        $pdo->rollbackTransaction(); return false;
     }
 
     /**
@@ -130,5 +137,17 @@ class PessoaService extends GenericService
 
         $pdo = $this->getConnection();
         return $pdo->deleteObject($sample, 'pessoa', 'id');
+    }
+
+    public function nextId()
+    {
+        $pdo = $this->getConnection();
+        return $pdo->nextId(self::ENTITY, 'id');
+    }
+
+    public function lastId()
+    {
+        $pdo = $this->getConnection();
+        return $pdo->lastId(self::ENTITY, 'id');
     }
 }
