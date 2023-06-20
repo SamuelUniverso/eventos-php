@@ -715,7 +715,10 @@ class PDOConnection
         $this->createStandardStatement(
             "SELECT max({$primaryKey}::int) as id FROM {$entity}"
         );
-        return $this->fetch();
+        $lastId = $this->fetch()->id ?? 0;
+        $this->setStandardStatement(null);
+
+        return $lastId;
     }
 
 
