@@ -4,6 +4,8 @@ use PHPUnit\Framework\TestCase;
 
 include "./vendor/autoload.php";
 
+///  php .\vendor\bin\phpunit AnnoLucisTest.php
+
 class AnnoLucisTest extends TestCase
 {
     public function testCalculaAnnoLucis_success()

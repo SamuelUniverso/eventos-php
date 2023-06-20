@@ -4,6 +4,8 @@ use PHPUnit\Framework\TestCase;
 
 include "./vendor/autoload.php";
 
+///  php .\vendor\bin\phpunit AnnoDominiTest.php
+
 class AnnoDominiTest extends TestCase
 {
     public function testCalculaAnnoDomini_success()

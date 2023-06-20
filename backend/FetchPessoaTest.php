@@ -11,6 +11,7 @@ include "./vendor/autoload.php";
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+///  php .\vendor\bin\phpunit FetchPessoaTest.php
 
 class FetchPessoaTest extends TestCase
 {
