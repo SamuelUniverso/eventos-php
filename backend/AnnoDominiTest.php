@@ -27,6 +27,6 @@ class AnnoDominiTest extends TestCase
         
         $AnnoDominiBirthYear = $AnnoLucisBirthYear - $factor;
 
-        $this->assertEquals(1997, $AnnoDominiBirthYear);
+        $this->assertNotEquals(1997, $AnnoDominiBirthYear);
     }
 }

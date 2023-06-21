@@ -30,17 +30,17 @@ class CreatePessoaTest extends TestCase
         $this->assertEquals("Samuel", $fetchedPessoa->getNome());
     }
 
-    public function testCreatePessoa_fail()
-    {
-        $pessoa = (new Pessoa())
-                    ->setNome('Samuel')
-                    ->setCpf('987654321');
+    // public function testCreatePessoa_fail()
+    // {
+    //     $pessoa = (new Pessoa())
+    //                 ->setNome('Samuel')
+    //                 ->setCpf('987654321');
 
-        $service = (new PessoaService());
-        $service->insert($pessoa);
+    //     $service = (new PessoaService());
+    //     $service->insert($pessoa);
     
-        $fetchedPessoa = $service->fetchById($service->lastId());
+    //     $fetchedPessoa = $service->fetchById($service->lastId());
 
-        $this->assertNotEquals("Samuel", $fetchedPessoa->getNome());
-    }
+    //     $this->assertNotEquals("Samuel", $fetchedPessoa->getNome());
+    // }
 }

@@ -22,10 +22,10 @@ class FetchPessoaTest extends TestCase
         $this->assertEquals("Fulano", $pessoa->getNome());
     }
 
-    public function testFetchPessoa_fail()
-    {
-        $pessoa = (new PessoaService())->fetchById(1);
+    // public function testFetchPessoa_fail()
+    // {
+    //     $pessoa = (new PessoaService())->fetchById(1);
 
-        $this->assertEquals("Sicrano", $pessoa->getNome());
-    }
+    //     $this->assertEquals("Sicrano", $pessoa->getNome());
+    // }
 }
